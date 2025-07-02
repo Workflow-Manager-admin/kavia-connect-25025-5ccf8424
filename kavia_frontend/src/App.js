@@ -29,7 +29,7 @@ function App() {
         </button>
         <img src={logo} className="App-logo" alt="logo" />
         <h1>KAVIA Meet Frontend</h1>
-        <HealthStatus backendBaseUrl="" />
+        <HealthStatus />
         <p>
           <em>
             Future features (user, meetings, chat, translation, etc.) will appear here as API routes are added to the backend!

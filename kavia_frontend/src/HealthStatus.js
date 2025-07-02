@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { getBackendHealth, getDbHealth } from "./api";
+import { getBackendHealth, getDbHealth, getApiBaseUrl } from "./api";
 
 // PUBLIC_INTERFACE
-export default function HealthStatus({ backendBaseUrl = "" }) {
+export default function HealthStatus({ backendBaseUrl }) {
   /**
    * HealthStatus: UI component to check/display backend and DB health endpoints.
    * - Calls GET / and GET /health/db when buttons are pressed.
    * - Shows current status and message, with color cues.
+   * - Uses API base URL from .env, unless backendBaseUrl prop is provided (advanced use only).
    */
+  const baseUrl = backendBaseUrl !== undefined && backendBaseUrl !== null && backendBaseUrl !== "" 
+    ? backendBaseUrl 
+    : getApiBaseUrl();
+
   const [apiStatus, setApiStatus] = useState(null);
   const [dbStatus, setDbStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,7 +20,7 @@ export default function HealthStatus({ backendBaseUrl = "" }) {
   // PUBLIC_INTERFACE
   async function checkApiHealth() {
     setLoading(true);
-    const result = await getBackendHealth(backendBaseUrl);
+    const result = await getBackendHealth(baseUrl);
     setApiStatus(result);
     setLoading(false);
   }
@@ -23,7 +28,7 @@ export default function HealthStatus({ backendBaseUrl = "" }) {
   // PUBLIC_INTERFACE
   async function checkDbHealth() {
     setLoading(true);
-    const result = await getDbHealth(backendBaseUrl);
+    const result = await getDbHealth(baseUrl);
     setDbStatus(result);
     setLoading(false);
   }

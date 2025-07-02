@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import HealthStatus from './HealthStatus';
 
 // PUBLIC_INTERFACE
 function App() {
@@ -27,20 +28,16 @@ function App() {
           {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
         </button>
         <img src={logo} className="App-logo" alt="logo" />
+        <h1>KAVIA Meet Frontend</h1>
+        <HealthStatus backendBaseUrl="" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <em>
+            Future features (user, meetings, chat, translation, etc.) will appear here as API routes are added to the backend!
+          </em>
         </p>
         <p>
           Current theme: <strong>{theme}</strong>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );

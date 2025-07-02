@@ -13,6 +13,52 @@ export function getApiBaseUrl() {
 }
 
 // PUBLIC_INTERFACE
+export async function registerUser(data, baseUrl) {
+  /**
+   * Registers a new user with { username, password, ... }.
+   * Returns: { status: "ok"|"error", message, ... }
+   */
+  const url = (baseUrl || getApiBaseUrl()) + "/register";
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      throw new Error(result.message || "Registration failed");
+    }
+    return result;
+  } catch (err) {
+    return { status: "error", message: err.message || "Registration error" };
+  }
+}
+
+// PUBLIC_INTERFACE
+export async function loginUser(data, baseUrl) {
+  /**
+   * Logs in a user with { username, password }.
+   * Returns: { status: "ok"|"error", message, token?, ... }
+   */
+  const url = (baseUrl || getApiBaseUrl()) + "/login";
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      throw new Error(result.message || "Login failed");
+    }
+    return result;
+  } catch (err) {
+    return { status: "error", message: err.message || "Login error" };
+  }
+}
+
+// PUBLIC_INTERFACE
 export async function getBackendHealth(baseUrl) {
   /**
    * Fetches the backend '/' route to check API health.
